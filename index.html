@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Explore the mythical creatures of Vaelondrisyl. Live dynamically updated gallery powered by GitHub Pages.">
+  <title>Vaelondrisyl — World of Mythical Creatures</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Ambient Glowing Background Elements -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Header / Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-dragon"></i>
+        </div>
+        <div class="brand-text">
+          <h1 class="site-title">VAELONDRISYL</h1>
+          <span class="site-tagline">World of Mythical Creatures</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div id="api-status-badge" class="status-badge loading">
+          <span class="status-dot"></span>
+          <span id="status-text" class="status-text">Connecting...</span>
+        </div>
+        <a href="https://github.com/JaredCraigSmith/Vaelondrisyl" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          <i class="fa-brands fa-github"></i> Repository
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+    <div class="container">
+
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="hero-badge">
+          <i class="fa-solid fa-sparkles"></i> Live Creature Codex
+        </div>
+        <h2 class="hero-title">The Mythical Bestiary</h2>
+        <p class="hero-subtitle">
+          Discover the legendary inhabitants of Vaelondrisyl. Images added to the <code class="code-badge">Creatures/</code> folder are automatically discovered and showcased here in real-time.
+        </p>
+      </section>
+
+      <!-- How It Works / Auto-Sync Banner -->
+      <div class="info-card">
+        <div class="info-card-icon">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <div class="info-card-content">
+          <h3>Automatic Sync Enabled</h3>
+          <p>
+            To introduce a new creature to the codex, simply upload an image file (<code class="code-badge">.jpg</code>, <code class="code-badge">.png</code>, <code class="code-badge">.webp</code>) into the <strong>Creatures</strong> folder and push your changes to GitHub. The codex updates automatically!
+          </p>
+        </div>
+      </div>
+
+      <!-- Control Toolbar: Search, Sort, View Modes -->
+      <section class="controls-section">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="search-input" placeholder="Search creatures by name..." aria-label="Search creatures">
+          <button id="clear-search" class="clear-btn hidden" title="Clear search">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+
+        <div class="controls-right">
+          <div class="control-group">
+            <label for="sort-select"><i class="fa-solid fa-sort"></i> Sort:</label>
+            <select id="sort-select" class="custom-select">
+              <option value="name-asc">Name (A &rarr; Z)</option>
+              <option value="name-desc">Name (Z &rarr; A)</option>
+              <option value="size-desc">Size (Largest)</option>
+              <option value="size-asc">Size (Smallest)</option>
+            </select>
+          </div>
+
+          <div class="view-toggle">
+            <button id="view-grid" class="toggle-btn active" title="Grid View">
+              <i class="fa-solid fa-border-all"></i>
+            </button>
+            <button id="view-compact" class="toggle-btn" title="Compact View">
+              <i class="fa-solid fa-list"></i>
+            </button>
+          </div>
+
+          <button id="refresh-btn" class="btn btn-icon" title="Refresh Creatures">
+            <i class="fa-solid fa-rotate-right" id="refresh-icon"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div id="stats-counter" class="stats-text">
+          Showing <span id="visible-count">0</span> of <span id="total-count">0</span> creatures
+        </div>
+        <div id="active-filter-tag" class="filter-tag hidden">
+          <span>Filter active</span>
+          <button id="reset-filter-btn" title="Reset filter">&times;</button>
+        </div>
+      </div>
+
+      <!-- Creatures Grid / Container -->
+      <section id="gallery-container" class="gallery-grid">
+        <!-- Dynamic Creature Cards will be rendered here via app.js -->
+      </section>
+
+      <!-- Loading State Skeleton -->
+      <div id="loading-skeleton" class="gallery-grid hidden">
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-sub"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-sub"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-sub"></div>
+        </div>
+        <div class="skeleton-card">
+          <div class="skeleton-img"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-sub"></div>
+        </div>
+      </div>
+
+      <!-- Empty / No Results State -->
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-icon">
+          <i class="fa-solid fa-scroll"></i>
+        </div>
+        <h3>No Creatures Found</h3>
+        <p id="empty-message">No creatures match your current search criteria.</p>
+        <button id="clear-search-empty-btn" class="btn btn-primary">Clear Search</button>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox-modal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <button id="modal-close" class="modal-close-btn" aria-label="Close modal">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <button id="modal-prev" class="modal-nav-btn prev" aria-label="Previous creature">
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      
+      <button id="modal-next" class="modal-nav-btn next" aria-label="Next creature">
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <div class="modal-body">
+        <div class="modal-image-wrapper">
+          <img id="modal-image" src="" alt="Creature preview">
+        </div>
+        <div class="modal-details">
+          <h2 id="modal-title" class="modal-creature-title">Creature Name</h2>
+          <div class="modal-meta">
+            <span class="meta-item"><i class="fa-solid fa-file-image"></i> <span id="modal-filename">filename.jpg</span></span>
+            <span class="meta-item"><i class="fa-solid fa-hard-drive"></i> <span id="modal-filesize">0 KB</span></span>
+          </div>
+          <div class="modal-actions">
+            <a id="modal-download-btn" href="#" download class="btn btn-primary" target="_blank" rel="noopener">
+              <i class="fa-solid fa-download"></i> View High Resolution
+            </a>
+            <a id="modal-github-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <i class="fa-brands fa-github"></i> GitHub Source
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-container">
+      <div class="footer-left">
+        <p>&copy; Vaelondrisyl Bestiary — World of Mythical Creatures</p>
+      </div>
+      <div class="footer-right">
+        <a href="https://github.com/JaredCraigSmith/Vaelondrisyl/tree/main/Creatures" target="_blank" rel="noopener noreferrer">
+          <i class="fa-solid fa-folder-open"></i> Open Creatures Folder
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
